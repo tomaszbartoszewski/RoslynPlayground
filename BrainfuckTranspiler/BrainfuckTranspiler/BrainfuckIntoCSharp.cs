@@ -15,13 +15,16 @@ namespace {0}
     {{
         public void {2}()
         {{
+            unchecked
+            {{
 {3}
+            }}
         }}
     }}
 }}";
 
-            var sb = new StringBuilderWithIndentation(12);
-            sb.AppendLine("var array = new int[30000];");
+            var sb = new StringBuilderWithIndentation(16);
+            sb.AppendLine("var array = new byte[30000];");
             sb.AppendLine("var index = 0;");
 
             using (var sr = new StreamReader(code))
@@ -47,7 +50,7 @@ namespace {0}
                             sb.AppendLine("Console.Write((char)array[index]);");
                             break;
                         case ',':
-                            sb.AppendLine("array[index] = (int)Console.ReadKey().KeyChar;");
+                            sb.AppendLine("array[index] = Convert.ToByte(Console.ReadKey().KeyChar);");
                             break;
                         case '[':
                             sb.AppendLine("while (array[index] != 0)");
